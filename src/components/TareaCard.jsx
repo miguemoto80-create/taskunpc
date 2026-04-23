@@ -1,10 +1,14 @@
-// src/components/TareaCard.jsx
-function TareaCard({ titulo, materia, completada }) {
+function TareaCard({ id, titulo, materia, completada, fecha, onCompletar }) {
   return (
-    <div className={`tarea-card ${completada ? 'completada' : ''}`}>
+    <article style={{ border: '1px solid #555', padding: '1rem', margin: '1rem' }}>
       <h3>{titulo}</h3>
-      <span className="materia">{materia}</span>
-    </div>
+      <p>{materia} · {fecha}</p>
+      <span>{completada ? '✅ Hecho' : '⏳ Pendiente'}</span>
+      
+      <button onClick={() => onCompletar(id)}>
+        Marcar como completada
+      </button>
+    </article>
   );
 }
 

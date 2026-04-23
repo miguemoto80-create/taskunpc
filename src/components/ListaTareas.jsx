@@ -1,12 +1,15 @@
 import { tareasIniciales } from '../data/tareas';
 import TareaCard from './TareaCard';
 
-function ListaTareas() {
+function ListaTareas({ alCompletarTarea }) {
   return (
     <section>
       {tareasIniciales.map((tarea) => (
-        // Usamos {...tarea} para pasar todas las propiedades de un solo golpe
-        <TareaCard key={tarea.id} {...tarea} />
+        <TareaCard 
+          key={tarea.id} 
+          {...tarea} 
+          onCompletar={alCompletarTarea} 
+        />
       ))}
     </section>
   );
