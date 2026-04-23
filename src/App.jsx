@@ -1,38 +1,31 @@
 import { Routes, Route, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import Inicio from './pages/Inicio';
 import DetalleTarea from './pages/DetalleTarea';
 import NuevaTarea from './pages/NuevaTarea';
-import { tareasIniciales } from './data/tareas';
 
 function App() {
-  const [tareas, setTareas] = useState(() => {
-    const guardadas = localStorage.getItem('taskunpc-tareas');
-    return guardadas ? JSON.parse(guardadas) : tareasIniciales;
-  });
-
-  useEffect(() => {
-    localStorage.setItem('taskunpc-tareas', JSON.stringify(tareas));
-  }, [tareas]);
-
-  const handleCompletar = (id) => {
-    const nuevas = tareas.map(t => 
-      t.id === id ? { ...t, completada: !t.completada } : t
-    );
-    setTareas(nuevas);
-  };
-
   return (
-    <div>
-      <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc' }}>
-        <Link to="/" style={{ marginRight: '10px' }}>Inicio</Link>
-        <Link to="/nueva">Nueva Tarea</Link>
+    <div className="container">
+      {/* Barra de navegación */}
+      <nav style={{ 
+        padding: '1rem', 
+        display: 'flex', 
+        gap: '15px', 
+        borderBottom: '1px solid #ccc',
+        marginBottom: '20px' 
+      }}>
+        <Link to="/">🏠 Inicio</Link>
+        <Link to="/nueva">➕ Nueva Tarea</Link>
       </nav>
 
+      {/* Definición de Rutas */}
       <Routes>
-        <Route path="/" element={<Inicio tareas={tareas} alCompletar={handleCompletar} />} />
+        <Route path="/" element={<Inicio />} />
         <Route path="/tarea/:id" element={<DetalleTarea />} />
         <Route path="/nueva" element={<NuevaTarea />} />
+        
+        {/* Ruta por si el usuario escribe cualquier otra cosa */}
+        <Route path="*" element={<h2>404 - Página no encontrada</h2>} />
       </Routes>
     </div>
   );
